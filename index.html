@@ -13,6 +13,7 @@
         margin: 0px;
     }
     .heading{
+        margin-top:20px;
         background-color: rgb(200, 11, 200);
         color:rgb(51, 17, 161);
         display: flex;
@@ -116,6 +117,9 @@
             grid-template-rows: repeat(3, 20vw);
             grid-template-columns: repeat(3, 20vw);
         }
+         .line{
+            display:none;
+        }
     }
     </style>
 </head>
@@ -181,12 +185,18 @@
         }
         //Game Logic
         let boxes = document.getElementsByClassName("box")
+        let chances=0
         Array.from(boxes).forEach(element => {
             let boxtext = element.querySelector('.boxtext')
             element.addEventListener('click', () => {
                 if (boxtext.innerText === '') {
                     boxtext.innerText = turn
+                    chances++
                     checkWin()
+                     if(chances===9){
+                        document.getElementById("result").innerText="Game Drawn Press Reset To play Again"
+                        document.getElementById("result").classList.remove("hide")
+                    }
                     if (!game_over) {
                         turn = change_turn()
                         document.getElementsByClassName("info")[0].innerText = "Turn for" + turn;
@@ -197,6 +207,7 @@
         //logic for reset button
         let reset = document.getElementById("reset")
         reset.addEventListener('click', () => {
+            chances=0
             let boxtexts = document.querySelectorAll('.boxtext')
             Array.from(boxtexts).forEach(element => {
                 element.innerText = ''
